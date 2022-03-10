@@ -2,23 +2,24 @@
   <div class="container-fluid">
     <div class="collapse navbar-collapse justify-content-center" id="navbarNavBot">
       <ul class="navbar-nav">
+        <% if user_signed_in? %>
           <li class="nav-item mx2">
-            <%= link_to content_tag(:i, nil, class: "bi bi-house-fill"), '#', class: 'nav-link'%>
+            <%= link_to content_tag(:i, nil, class: "bi bi-house-fill"), root_path, class: 'nav-link'%>
           </li>
           <li class="nav-item mx-2">
-            <%= link_to content_tag(:i, nil, class: "bi bi-search"), '#', class: 'nav-link'%>
+            <%= link_to content_tag(:i, nil, class: "bi bi-plus-circle"), new_post_path, class: 'nav-link'%>
           </li>
           <li class="nav-item mx-2">
-            <%= link_to content_tag(:i, nil, class: "bi bi-plus-circle-fill"), '#', class: 'nav-link'%>
+            <%= link_to content_tag(:i, nil, class: "bi bi-person-circle"), profile_path(current_user), class: 'nav-link'%>
           </li>
-          <% if user_signed_in? %>
-            <li class="nav-item mx-2">
-              <%= link_to content_tag(:i, nil, class: "bi bi-person-circle"), profile_path(current_user), class: 'nav-link'%>
-            </li>
-            <li class="nav-item mx-2">
-              <%= link_to content_tag(:i, nil, class: "bi bi-box-arrow-right"), destroy_user_session_path, method: :delete, class: 'nav-link'%>
-            </li>
-          <% end %>
+          <li class="nav-item mx-2">
+            <%= link_to content_tag(:i, nil, class: "bi bi-box-arrow-right"), destroy_user_session_path, method: :delete, class: 'nav-link'%>
+          </li>
+        <% else %>
+          <li>
+            TwitterClone
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>

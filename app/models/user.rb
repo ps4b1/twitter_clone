@@ -7,6 +7,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   validates :username, presence: true, uniqueness: true
   has_one_attached :avatar
+  has_many :posts, dependent: :destroy
   after_commit :add_default_avatar, on: %i[create update]
 
   def avatar_thumbnail
@@ -22,7 +23,7 @@ class User < ApplicationRecord
           Rails.root.join(
             'app', 'assets', 'images', 'default_avatar.png'
           )
-        ), filename:'default_avatar.png',
+        ), filename: 'default_avatar.png',
         content_type: 'image/png'
       )
     end

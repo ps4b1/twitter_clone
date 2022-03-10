@@ -1,0 +1,25 @@
+<div class="container my-5" style="width: 30%">
+  <div class="row">
+    <%= link_to post.user.username, profile_path(post.user), class: "card-title col-6", style: 'text-decoration: none; color: black;'%>
+    <% if current_user==post.user %>
+      <div class="col-6">
+        <div class="d-flex justify-content-end">
+          <div class="dropdown">
+            <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-list"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <%= link_to "Edit", edit_post_path(post), class: 'dropdown-item' %>
+              <%= link_to "Delete", post_path(post), method: :delete, class: 'dropdown-item', style: 'color: red;' %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <p class="card-text"><%= post.description %></p>
+  <% if post.photo.attached? %>
+    <%= image_tag(post.photo, style: "width: 100%")%>
+  <% end %>
+  <hr>
+</div>
