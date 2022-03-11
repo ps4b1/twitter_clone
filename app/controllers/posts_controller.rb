@@ -4,7 +4,6 @@ class PostsController < ApplicationController
   before_action :set_post, only: %i[show edit update destroy]
   before_action :require_same_user, only: %i[edit update destroy]
 
-
   # GET /posts or /posts.json
   def index
     @posts = Post.all
@@ -52,7 +51,7 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1 or /posts/1.json
   def destroy
-    @user=@post.user
+    @user = @post.user
     @post.destroy
 
     respond_to do |format|

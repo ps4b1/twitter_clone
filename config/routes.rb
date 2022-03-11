@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :relationships, only: %i[create destroy]
   resources :posts
   devise_for :users
   get '/profile/:id', to: 'users#show', as: 'profile'

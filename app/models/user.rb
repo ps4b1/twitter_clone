@@ -8,10 +8,26 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   has_one_attached :avatar
   has_many :posts, dependent: :destroy
+  has_many :followers
+  has_many :subscribers, through: :followers
+  has_many :followings
+  has_many :subscribeds, through: :followings
   after_commit :add_default_avatar, on: %i[create update]
 
   def avatar_thumbnail
     avatar.variant(resize: '150x150!').processed
+  end
+
+  def count_subscribers
+    subscribers.count
+  end
+
+  def count_subscribed
+    subscribeds.count
+  end
+
+  def not_following?(user)
+    !followings.where(subscribed_id: user.id).exists?
   end
 
   private
