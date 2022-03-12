@@ -1,11 +1,9 @@
 
 <h1>Posts</h1>
-
+<div class=" container justify-content-center">
 <% @posts.each do |post| %>
-  <div class=" container d-flex justify-content-center">
     <%= render 'post_layout', post: post %>
-  </div>
 <% end %>
-
+</div>
 <br>
 

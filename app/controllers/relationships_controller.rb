@@ -15,8 +15,8 @@ class RelationshipsController < ApplicationController
 
   def destroy
     potential = User.find(params[:id])
-    follower=potential.followers.where(subscriber_id: current_user.id).first
-    following = current_user.followings.where(subscribed_id: params[:id]).first
+    follower = potential.followers.find_by(subscriber_id: current_user.id)
+    following = current_user.followings.find_by(subscribed_id: params[:id])
     following.destroy
     follower.destroy
     redirect_to profile_path(potential)

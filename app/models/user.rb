@@ -6,12 +6,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   validates :username, presence: true, uniqueness: true
+  validates :description, length: { maximum: 150 }
   has_one_attached :avatar
   has_many :posts, dependent: :destroy
-  has_many :followers
+  has_many :followers, dependent: :destroy
   has_many :subscribers, through: :followers
-  has_many :followings
+  has_many :followings, dependent: :destroy
   has_many :subscribeds, through: :followings
+  has_many :likes, dependent: :destroy
   after_commit :add_default_avatar, on: %i[create update]
 
   def avatar_thumbnail

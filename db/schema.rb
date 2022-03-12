@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_220_311_184_240) do
+ActiveRecord::Schema.define(version: 20_220_312_104_825) do
   create_table 'active_storage_attachments', force: :cascade do |t|
     t.string 'name', null: false
     t.string 'record_type', null: false
@@ -60,6 +60,18 @@ ActiveRecord::Schema.define(version: 20_220_311_184_240) do
     t.index ['user_id'], name: 'index_followings_on_user_id'
   end
 
+  create_table 'likes', force: :cascade do |t|
+    t.integer 'user_id', null: false
+    t.integer 'likeable_id', null: false
+    t.string 'likeable_type'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index %w[likeable_id likeable_type], name: 'index_likes_on_likeable_id_and_likeable_type'
+    t.index %w[user_id likeable_id likeable_type],
+            name: 'index_likes_on_user_id_and_likeable_id_and_likeable_type', unique: true
+    t.index ['user_id'], name: 'index_likes_on_user_id'
+  end
+
   create_table 'posts', force: :cascade do |t|
     t.text 'description'
     t.integer 'user_id'
@@ -76,6 +88,7 @@ ActiveRecord::Schema.define(version: 20_220_311_184_240) do
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
     t.string 'username'
+    t.text 'description'
     t.index ['email'], name: 'index_users_on_email', unique: true
     t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
   end
@@ -86,4 +99,5 @@ ActiveRecord::Schema.define(version: 20_220_311_184_240) do
   add_foreign_key 'followers', 'users', column: 'subscriber_id'
   add_foreign_key 'followings', 'users'
   add_foreign_key 'followings', 'users', column: 'subscribed_id'
+  add_foreign_key 'likes', 'users'
 end
