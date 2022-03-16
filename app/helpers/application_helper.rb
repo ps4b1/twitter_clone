@@ -5,6 +5,11 @@ module ApplicationHelper
     current_user.likes.find_by(likeable: object)
   end
 
+  def not_following?(user)
+    Relation.exists?(follower_id: current_user.id, followee_id: user.id)
+  end
+
+
   def id_pass(object)
     object.id
   end

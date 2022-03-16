@@ -9,8 +9,8 @@
       <%= @user.description %>
       <br>
     <% end %>
-    <%= "Following #{@user.count_subscribed}" %>
-    <%= "Followers #{@user.count_subscribers}"%>
+    <%="Followers #{@user.followers.count}" %>
+    <%="Following #{@user.followees.count}" %>
   </div>
   <%if @user==current_user%>
     <div class="actions">
@@ -18,7 +18,7 @@
     </div>
   <% else %>
     <div>
-      <% if current_user.not_following?(@user) %>
+      <% if !not_following?(@user) %>
         <%= link_to "Follow", relationships_path(relation: @user), method: :post, class: "btn btn-outline-primary" %>
       <% else %>
         <%= link_to "Unfollow", relationship_path(@user), method: :delete, class: "btn btn-outline-primary" %>

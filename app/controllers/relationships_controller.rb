@@ -3,9 +3,8 @@
 class RelationshipsController < ApplicationController
   def create
     potential = User.find(params[:relation])
-    current_user.followings.build(subscribed_id: potential.id)
-    potential.followers.build(subscriber_id: current_user.id)
-    if current_user.save && potential.save
+    @relation = Relation.new(follower_id: current_user.id, followee_id: potential.id)
+    if @relation.save
       redirect_to profile_path(potential)
       flash[:notice] = "You are following #{potential.username}"
     else
@@ -14,11 +13,9 @@ class RelationshipsController < ApplicationController
   end
 
   def destroy
-    potential = User.find(params[:id])
-    follower = potential.followers.find_by(subscriber_id: current_user.id)
-    following = current_user.followings.find_by(subscribed_id: params[:id])
-    following.destroy
-    follower.destroy
-    redirect_to profile_path(potential)
+    @relation = Relation.find_by(follower_id: current_user.id, followee_id: params[:id])
+    user = User.find(params[:id])
+    @relation.destroy
+    redirect_to profile_path(user)
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_14_120539) do
+ActiveRecord::Schema.define(version: 2022_03_16_194634) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -51,24 +51,6 @@ ActiveRecord::Schema.define(version: 2022_03_14_120539) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "followers", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "subscriber_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["subscriber_id"], name: "index_followers_on_subscriber_id"
-    t.index ["user_id"], name: "index_followers_on_user_id"
-  end
-
-  create_table "followings", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "subscribed_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["subscribed_id"], name: "index_followings_on_subscribed_id"
-    t.index ["user_id"], name: "index_followings_on_user_id"
-  end
-
   create_table "likes", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "likeable_id", null: false
@@ -85,6 +67,15 @@ ActiveRecord::Schema.define(version: 2022_03_14_120539) do
     t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "relations", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "followee_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["followee_id"], name: "index_relations_on_followee_id"
+    t.index ["follower_id"], name: "index_relations_on_follower_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -104,9 +95,7 @@ ActiveRecord::Schema.define(version: 2022_03_14_120539) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
-  add_foreign_key "followers", "users"
-  add_foreign_key "followers", "users", column: "subscriber_id"
-  add_foreign_key "followings", "users"
-  add_foreign_key "followings", "users", column: "subscribed_id"
   add_foreign_key "likes", "users"
+  add_foreign_key "relations", "users", column: "followee_id"
+  add_foreign_key "relations", "users", column: "follower_id"
 end

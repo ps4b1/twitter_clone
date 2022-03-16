@@ -3,7 +3,7 @@
 class LikesController < ApplicationController
   def create
     @like = current_user.likes.new(like_params)
-    redirect_to root_path
+    redirect_to @like.likeable
     flash[:alert] = 'Something went wrong' unless @like.save
   end
 

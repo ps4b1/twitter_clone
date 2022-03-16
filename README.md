@@ -9,7 +9,7 @@ Things you may want to cover:
 TWITTER CLONE FOR PRACTICE
 
 
-* Ruby version
+* Ruby version 2.7.2
 
 * System dependencies
 
