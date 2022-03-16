@@ -1,3 +1,26 @@
 <%= render 'post_layout', post: @post %>
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
+<div class="container mb-5" style="width: 30%">
+  <a onclick="myFunction()">Comment</a>
+  <br>
+  <div id="comment" style="display: none">
+    <%= render partial: 'comments/new_comment', locals: {object: @post} %>
+    <% if @post.comments.any? %>
+      <strong>Comments:</strong>
+      <%= render @post.comments %>
+    <% end %>
+  </div>
+</div>
+<div class="mb-5">
+  <%= link_to 'Edit', edit_post_path(@post) %> |
+  <%= link_to 'Back', posts_path %>
+</div>
+<script>
+function myFunction() {
+  var x = document.getElementById("comment");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    } else {
+    x.style.display = "none";
+  }
+}
+</script>

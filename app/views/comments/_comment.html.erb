@@ -1,0 +1,32 @@
+<div>
+  <strong><%= link_to comment.user.username, profile_path(comment.user), style: 'text-decoration: none; color: black; font-size: small' %></strong>
+  <br>
+  <small>
+    <%=comment.description %>
+  </small>
+  <br>
+  <% if current_user == comment.user %>
+    <%= link_to "Delete", comment_path(comment), method: :delete, style: "color: black; font-size: small"%>
+  <% end %>
+  <% if find_like(comment).nil? %>
+    <%= form_for new_like do |form| %>
+      <%= form.hidden_field :likeable_id, value: id_pass(comment)%>
+      <%= form.hidden_field :likeable_type, value: comment.class %>
+      <%= form.submit "Like",  style: 'text-decoration: underline; border: none; background: none; color: black; font-size: small' %>
+      <%= comment.count_likes %>
+    <% end %>
+  <% else %>
+    <%= link_to "Dislike", like_path(find_like(comment)), method: :delete, style: 'color: black; font-size: small'%>
+    <%= comment.count_likes %>
+  <% end %>
+</div>
+<!--<div id="reply" style="display: none; box-shadow: none">-->
+  <%#= render partial: 'comments/new_comment', locals: {object: comment} %>
+<!--</div>-->
+<%# if comment.comments.any? %>
+<!--  <ul>-->
+<!--    <li style="list-style: none;">-->
+      <%#= render comment.comments %>
+<!--    </li>-->
+<!--  </ul>-->
+<%# end %>

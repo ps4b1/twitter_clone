@@ -1,0 +1,7 @@
+<%= form_for new_comment do |form| %>
+  <%= form.hidden_field :commentable_id, value: id_pass(object)%>
+  <%= form.hidden_field :commentable_type, value: object.class %>
+  <%= form.text_area :description %> <br>
+  <%= form.submit "Comment" %>
+<% end %>
+<br>

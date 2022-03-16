@@ -12,4 +12,7 @@ module ApplicationHelper
   def new_like
     Like.new
   end
+  def new_comment
+    Comment.new
+  end
 end

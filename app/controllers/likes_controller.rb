@@ -3,17 +3,12 @@
 class LikesController < ApplicationController
   def create
     @like = current_user.likes.new(like_params)
-    if !@like.save
-      redirect_to root_path
-      flash[:alert] = 'Something went wrong'
-    else
-      redirect_to root_path
-    end
+    redirect_to root_path
+    flash[:alert] = 'Something went wrong' unless @like.save
   end
 
   def destroy
     @like = current_user.likes.find(params[:id])
-    likeable = @like.likeable
     @like.destroy
     redirect_to root_path
   end

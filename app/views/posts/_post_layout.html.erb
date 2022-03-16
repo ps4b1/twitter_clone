@@ -1,12 +1,11 @@
-<div class="container my-5" style="width: 30%">
+<div class="container my-3" style="width: 30%">
   <div class="row">
     <%= link_to post.user.username, profile_path(post.user), class: "card-title col-6", style: 'text-decoration: none; color: black;'%>
     <% if current_user==post.user %>
       <div class="col-6">
         <div class="d-flex justify-content-end">
           <div class="dropdown">
-            <button class="btn btn-light btn-sm" style="background: none; box-shadow: none;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bi bi-list"></i>
+            <button class="btn btn-light btn-sm bi bi-list" style="background: none; box-shadow: none;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <%= link_to "Edit", edit_post_path(post), class: 'dropdown-item' %>
@@ -25,8 +24,8 @@
       <li class="nav-item mx-2">
         <% if find_like(post).nil? %>
           <%= form_for new_like do |form| %>
-            <%=form.hidden_field :likeable_id, value: id_pass(post)%>
-            <%= form.hidden_field :likeable_type, value: "Post" %>
+            <%= form.hidden_field :likeable_id, value: id_pass(post)%>
+            <%= form.hidden_field :likeable_type, value: post.class %>
             <%= button_tag content_tag(:i, nil, class: "bi bi-heart"), type: 'submit', class: "btn btn-outline-danger btn-sm" %>
             <%= post.count_likes %>
           <% end %>
@@ -36,13 +35,14 @@
         <% end %>
       </li>
       <li class="nav-item mx-2">
-        <%= link_to content_tag(:i, nil, class: "bi bi-chat-square-dots"), '#', class: "btn btn-warning btn-sm"%>
-        <%= "3" %>
+        <%= link_to content_tag(:i, nil, class: "bi bi-chat-square-dots"), post_path(post), class: "btn btn-outline-success btn-sm", id: "comment_click"%>
+        <%= post.count_comments %>
       </li>
       <li class="nav-item mx-2">
-        <%= link_to content_tag(:i, nil, class: "bi bi-arrow-90deg-right"), '#', class: "btn btn-primary btn-sm"%>
-        <%= "3" %>
+        <%= link_to content_tag(:i, nil, class: "bi bi-arrow-90deg-right"), '#', class: "btn btn-outline-primary btn-sm"%>
+        <%= "0" %>
       </li>
     </ul>
   <hr>
 </div>
+

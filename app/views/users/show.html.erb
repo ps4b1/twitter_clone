@@ -1,14 +1,14 @@
-<div style="float: left;">
+<div>
   <%= image_tag(@user.avatar, style: "width: 100px; height: 100px;", class: "mr-4") %>
 </div>
-<div style="display: inline-block;">
+<div>
   <div>
     <%=@user.username%>
     <br>
     <% if @user.description %>
       <%= @user.description %>
+      <br>
     <% end %>
-    <br>
     <%= "Following #{@user.count_subscribed}" %>
     <%= "Followers #{@user.count_subscribers}"%>
   </div>
