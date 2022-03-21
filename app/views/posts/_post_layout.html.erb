@@ -16,7 +16,14 @@
       </div>
     <% end %>
   </div>
-  <p class="card-text"><%= post.description %></p>
+  <p class="card-text"><%= post.content %></p>
+  <% if !post.repostable_id.nil? %>
+    <%if post.repostable_type=="Post" %>
+      <%= render partial: "posts/repost", locals: {post: Post.find(post.repostable_id)} %>
+    <% else %>
+      <%= render partial: "comments/recomment", locals: {comment: Comment.find(post.repostable_id)}%>
+    <% end %>
+  <% end %>
   <% if post.photo.attached? %>
     <%= image_tag(post.photo, style: "width: 100%")%>
   <% end %>
@@ -39,7 +46,7 @@
         <%= post.count_comments %>
       </li>
       <li class="nav-item mx-2">
-        <%= link_to content_tag(:i, nil, class: "bi bi-arrow-90deg-right"), '#', class: "btn btn-outline-primary btn-sm"%>
+        <%= link_to content_tag(:i, nil, class: "bi bi-arrow-90deg-right"), new_post_path(repostable_id: post.id, repostable_type: "Post"), class: "btn btn-outline-primary btn-sm"%>
         <%= "0" %>
       </li>
     </ul>

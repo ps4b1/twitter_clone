@@ -1,0 +1,16 @@
+<div class="container my-3" style="width: 85%;">
+  <div class="row">
+    <%= link_to post.user.username, profile_path(post.user), class: "card-title col-6", style: 'text-decoration: none; color: black;'%>
+  </div>
+  <p class="card-text"><%= post.content %></p>
+  <% if !post.repostable_id.nil? %>
+    <% if post.repostable_type == 'Post'%>
+      <%= render partial: 'posts/repost', locals: {post: Post.find(post.repostable_id)} %>
+    <%else %>
+      <%= render partial: 'comments/recomment', locals: {comment: Comment.find(post.repostable_id)} %>
+    <% end %>
+  <% end %>
+  <% if post.photo.attached? %>
+    <%= image_tag(post.photo, style: "width: 100%")%>
+  <% end %>
+</div>

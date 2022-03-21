@@ -11,9 +11,14 @@
     </div>
   <% end %>
 
+  <% if !@repostable_id.nil? && !@repostable_type.nil?%>
+    <%= form.hidden_field :repostable_id, value: @repostable_id%>
+    <%= form.hidden_field :repostable_type, value: @repostable_type %>
+  <% end %>
+
   <div class="field">
-    <%= form.label :description, style: 'display:none;' %>
-    <%= form.text_area :description %>
+    <%= form.label :content, style: 'display:none;' %>
+    <%= form.text_area :content %>
   </div>
 
   <div class="field">

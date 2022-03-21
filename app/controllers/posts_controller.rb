@@ -15,6 +15,13 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
+    if params[:repostable_id].present? && params[:repostable_type].present?
+      @repostable_id=params[:repostable_id]
+      @repostable_type=params[:repostable_type]
+    else
+      @repostable_id=nil
+      @repostable_type=nil
+    end
   end
 
   # GET /posts/1/edit
@@ -69,7 +76,7 @@ class PostsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def post_params
-    params.require(:post).permit(:description, :photo)
+    params.require(:post).permit(:content, :photo, :repostable_id, :repostable_type)
   end
 
   def require_same_user

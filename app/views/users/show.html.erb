@@ -27,7 +27,10 @@
   <% end %>
 </div>
 <% if @posts %>
-  <% @posts.each do |post| %>
-    <%= render 'posts/post_layout', post:post %>
-  <% end %>
+  <div class="mb-5">
+    <% @posts.each do |post| %>
+      <%= render 'posts/post_layout', post:post %>
+    <% end %>
+  </div>
+  <br>
 <% end %>

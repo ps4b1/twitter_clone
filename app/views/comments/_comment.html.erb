@@ -5,20 +5,29 @@
     <%=comment.description %>
   </small>
   <br>
-  <% if current_user == comment.user %>
-    <%= link_to "Delete", comment_path(comment), method: :delete, style: "color: black; font-size: small"%>
-  <% end %>
-  <% if find_like(comment).nil? %>
-    <%= form_for new_like do |form| %>
-      <%= form.hidden_field :likeable_id, value: id_pass(comment)%>
-      <%= form.hidden_field :likeable_type, value: comment.class %>
-      <%= form.submit "Like",  style: 'text-decoration: underline; border: none; background: none; color: black; font-size: small' %>
-      <%= comment.count_likes %>
+  <ul class="nav ">
+    <% if current_user == comment.user %>
+      <li class="nav-item mx-2">
+          <%= link_to "Delete", comment_path(comment), method: :delete, style: "color: black; font-size: small;"%>
+      </li>
     <% end %>
-  <% else %>
-    <%= link_to "Dislike", like_path(find_like(comment)), method: :delete, style: 'color: black; font-size: small'%>
-    <%= comment.count_likes %>
-  <% end %>
+    <li class="nav-item mx-2">
+      <% if find_like(comment).nil? %>
+        <%= form_for new_like do |form| %>
+          <%= form.hidden_field :likeable_id, value: id_pass(comment)%>
+          <%= form.hidden_field :likeable_type, value: comment.class %>
+          <%= form.submit "Like",  style: 'text-decoration: underline; border: none; background: none; color: black; font-size: small;' %>
+          <%= comment.count_likes %>
+        <% end %>
+      <% else %>
+        <%= link_to "Dislike", like_path(find_like(comment)), method: :delete, style: 'color: black; font-size: small;'%>
+        <%= comment.count_likes %>
+      <% end %>
+    </li>
+    <li class="nav-item mx-2">
+      <%= link_to "Repost", new_post_path(repostable_id: comment.id, repostable_type: "Comment"),  style: 'color: black; font-size: small'%>
+    </li>
+  </ul>
 </div>
 <!--<div id="reply" style="display: none; box-shadow: none">-->
   <%#= render partial: 'comments/new_comment', locals: {object: comment} %>

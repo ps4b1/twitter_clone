@@ -5,6 +5,7 @@ class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :commentable, polymorphic: true
   has_many :likes, as: :likeable
+  has_many :posts, as: :repostable
   has_many :comments, as: :commentable, dependent: :destroy
 
   def count_likes
