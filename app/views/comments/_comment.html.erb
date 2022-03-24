@@ -1,3 +1,4 @@
+<hr>
 <div>
   <strong><%= link_to comment.user.username, profile_path(comment.user), style: 'text-decoration: none; color: black; font-size: small' %></strong>
   <br>
@@ -6,36 +7,48 @@
   </small>
   <br>
   <ul class="nav ">
-    <% if current_user == comment.user %>
-      <li class="nav-item mx-2">
-          <%= link_to "Delete", comment_path(comment), method: :delete, style: "color: black; font-size: small;"%>
-      </li>
-    <% end %>
     <li class="nav-item mx-2">
       <% if find_like(comment).nil? %>
         <%= form_for new_like do |form| %>
           <%= form.hidden_field :likeable_id, value: id_pass(comment)%>
           <%= form.hidden_field :likeable_type, value: comment.class %>
           <%= form.submit "Like",  style: 'text-decoration: underline; border: none; background: none; color: black; font-size: small;' %>
-          <%= comment.count_likes %>
+          <small><%= comment.count_likes %></small>
         <% end %>
       <% else %>
         <%= link_to "Dislike", like_path(find_like(comment)), method: :delete, style: 'color: black; font-size: small;'%>
-        <%= comment.count_likes %>
+        <small><%= comment.count_likes %></small>
       <% end %>
     </li>
     <li class="nav-item mx-2">
       <%= link_to "Repost", new_post_path(repostable_id: comment.id, repostable_type: "Comment"),  style: 'color: black; font-size: small'%>
+      <small><%= comment.posts.count %></small>
     </li>
+    <% if current_user == comment.user %>
+      <li class="nav-item mx-2">
+        <%= link_to "Delete", comment_path(comment), method: :delete, style: "color: black; font-size: small;"%>
+      </li>
+    <% end %>
   </ul>
+  <a class="reply_button" style="color: black; font-size: small; text-decoration: underline;">Reply</a>
+  <div class="reply_box" style="display: none; box-shadow: none">
+    <%= render partial: 'comments/new_comment', locals: {object: comment} %>
+  </div>
 </div>
-<!--<div id="reply" style="display: none; box-shadow: none">-->
-  <%#= render partial: 'comments/new_comment', locals: {object: comment} %>
-<!--</div>-->
-<%# if comment.comments.any? %>
-<!--  <ul>-->
-<!--    <li style="list-style: none;">-->
-      <%#= render comment.comments %>
-<!--    </li>-->
-<!--  </ul>-->
-<%# end %>
+<% if comment.replys.any? %>
+  <ul style="list-style-type: none;">
+    <% comment.replys.each do |reply| %>
+       <li>
+         <%= render partial: 'comments/comment', locals: {comment: reply} %>
+       </li>
+    <% end %>
+  </ul>
+<% end %>
+<script>
+    document.querySelectorAll('.reply_button').forEach((el) =>{
+      el.addEventListener('click', (ev) =>{
+          ev.preventDefault();
+          el.nextElementSibling.style = 'display: block;'
+          })
+    })
+</script>

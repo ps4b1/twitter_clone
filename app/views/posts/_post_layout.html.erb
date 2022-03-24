@@ -42,7 +42,7 @@
         <% end %>
       </li>
       <li class="nav-item mx-2">
-        <%= link_to content_tag(:i, nil, class: "bi bi-chat-square-dots"), post_path(post), class: "btn btn-outline-success btn-sm", id: "comment_click"%>
+        <a onclick="Comment()"><i class="bi bi-chat-square-dots btn btn-outline-success btn-sm"></i></a>
         <%= post.count_comments %>
       </li>
       <li class="nav-item mx-2">
@@ -50,6 +50,25 @@
         <%= "0" %>
       </li>
     </ul>
+  <div id="comment" style="display: none">
+    <br>
+    <%= render partial: 'comments/new_comment', locals: {object: post} %>
+    <% if post.comments.any? %>
+      <strong>Comments:</strong>
+      <%= render post.comments %>
+    <% end %>
+  </div>
   <hr>
 </div>
 
+
+<script>
+    function Comment() {
+        var x = document.getElementById("comment");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>

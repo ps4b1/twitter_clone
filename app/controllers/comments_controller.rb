@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
   def create
     @comment = current_user.comments.new(comment_params)
     if @comment.save
-      redirect_to @comment.commentable
+      redirect_to root_path
     else
       flash[:alert] = 'Something went wrong'
     end
@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
     @comment = current_user.comments.find(params[:id])
     commentable = @comment.commentable
     @comment.destroy
-    redirect_to commentable
+    redirect_to root_path
   end
 
   def comment_params
