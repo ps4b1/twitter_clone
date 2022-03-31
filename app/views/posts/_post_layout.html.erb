@@ -50,7 +50,7 @@
         <%= "0" %>
       </li>
     </ul>
-  <div id="comment" style="display: none">
+  <div id="comment<%=post.id%>" style="display: none">
     <br>
     <%= render partial: 'comments/new_comment', locals: {object: post} %>
     <% if post.comments.any? %>
@@ -64,7 +64,7 @@
 
 <script>
     function Comment() {
-        var x = document.getElementById("comment");
+        var x = document.getElementById("comment<%=post.id%>");
         if (x.style.display === "none") {
             x.style.display = "block";
         } else {

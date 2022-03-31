@@ -9,10 +9,13 @@ class User < ApplicationRecord
   validates :description, length: { maximum: 150 }
   has_one_attached :avatar
   has_many :posts, dependent: :destroy
+
   has_many :follower_relations, foreign_key: :follower_id, class_name: 'Relation'
   has_many :followees, through: :follower_relations
+
   has_many :followee_relations, foreign_key: :followee_id, class_name: 'Relation'
   has_many :followers, through: :followee_relations
+
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
   after_commit :add_default_avatar, on: %i[create update]
