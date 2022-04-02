@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'messages/create'
+  get 'messages/destroy'
   resources :comments, only: %i[create destroy]
   resources :likes, only: %i[create destroy]
   resources :relationships, only: %i[create destroy]

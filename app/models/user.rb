@@ -18,6 +18,7 @@ class User < ApplicationRecord
 
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :messages, dependent: :destroy
   after_commit :add_default_avatar, on: %i[create update]
 
   def avatar_thumbnail

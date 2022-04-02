@@ -1,10 +1,9 @@
-
 <h1>Posts</h1>
 <div class=" container justify-content-center">
-<% @posts.each do |post| %>
-    <%= render 'post_layout', post: post %>
-<% end %>
+  <% @posts.each do |post| %>
+      <%= render 'post_layout', post: post %>
+  <% end %>
 </div>
-<br>
-<br>
 
+<%= javascript_pack_tag 'comment' %>
+<%= javascript_pack_tag 'reply' %>

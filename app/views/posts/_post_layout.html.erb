@@ -42,15 +42,15 @@
         <% end %>
       </li>
       <li class="nav-item mx-2">
-        <a onclick="Comment()"><i class="bi bi-chat-square-dots btn btn-outline-success btn-sm"></i></a>
+        <a class="comment"><i class="bi bi-chat-square-dots btn btn-outline-success btn-sm"></i></a>
         <%= post.count_comments %>
       </li>
       <li class="nav-item mx-2">
         <%= link_to content_tag(:i, nil, class: "bi bi-arrow-90deg-right"), new_post_path(repostable_id: post.id, repostable_type: "Post"), class: "btn btn-outline-primary btn-sm"%>
-        <%= "0" %>
+        <%= post.posts.count %>
       </li>
     </ul>
-  <div id="comment<%=post.id%>" style="display: none">
+  <div class="comment_area">
     <br>
     <%= render partial: 'comments/new_comment', locals: {object: post} %>
     <% if post.comments.any? %>
@@ -62,13 +62,3 @@
 </div>
 
 
-<script>
-    function Comment() {
-        var x = document.getElementById("comment<%=post.id%>");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-    }
-</script>
