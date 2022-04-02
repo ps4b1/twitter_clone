@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_02_180240) do
+ActiveRecord::Schema.define(version: 2022_04_02_194710) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -40,6 +40,12 @@ ActiveRecord::Schema.define(version: 2022_04_02_180240) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "chatrooms", force: :cascade do |t|
+    t.string "room_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "comments", force: :cascade do |t|
     t.text "description"
     t.string "commentable_type", null: false
@@ -67,6 +73,8 @@ ActiveRecord::Schema.define(version: 2022_04_02_180240) do
     t.text "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "chatroom_id"
+    t.index ["chatroom_id"], name: "index_messages_on_chatroom_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
@@ -106,6 +114,7 @@ ActiveRecord::Schema.define(version: 2022_04_02_180240) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
   add_foreign_key "likes", "users"
+  add_foreign_key "messages", "chatrooms"
   add_foreign_key "messages", "users"
   add_foreign_key "relations", "users", column: "followee_id"
   add_foreign_key "relations", "users", column: "follower_id"
