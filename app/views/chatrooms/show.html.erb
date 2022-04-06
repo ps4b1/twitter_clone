@@ -1,1 +1,11 @@
-
+<div class="chatroom_show">
+  <ul>
+    <% @chatroom.messages.each do |message| %>
+      <div class="d-flex justify-content-<%= message.user==current_user ? "end" : "start"%>">
+        <li>
+         <%=  render message %>
+        </li>
+      </div>
+    <% end %>
+  </ul>
+</div>

@@ -1,3 +1,39 @@
 // Place all the styles related to the messages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.sent{
+  border-radius: 10px;
+  background-color: #d8f3dc;
+  font-size: medium;
+  color: #343a40;
+  padding: 3px;
+  .message {
+    margin-top: 10px;
+    text-align: justify;
+  }
+  width: 15rem;
+}
+
+.reply{
+  border-radius: 10px;
+  background-color: #e9ecef;
+  font-size: medium;
+  text-decoration: none;
+  color: #343a40;
+  padding: 3px;
+  .message {
+    margin-top: 10px;
+    text-align: justify;
+  }
+  width: 15rem;
+}
+
+.profile_link{
+  text-decoration: none;
+  color: #343a40;
+}
+
+.profile_link:hover{
+  color: #212529;
+}

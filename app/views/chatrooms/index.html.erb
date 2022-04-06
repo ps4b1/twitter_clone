@@ -1,17 +1,25 @@
 <% if @chatrooms.any? %>
   <% @chatrooms.each do |chatroom| %>
-    <hr>
-    <% if !chatroom.room_name.nil? %>
-      <%= chatroom.room_name %>
-    <% else %>
-      <% chatroom.users.each do |user|%>
-        <% if !user==current_user %>
-          <%= user.username %>
+    <%= link_to chatroom_path(chatroom), class:"link_to_chatroom" do%>
+      <div class="chatroom_box">
+        <% if !chatroom.room_name.nil? %>
+          <%= chatroom.room_name %>
+        <% else %>
+          <% chatroom.users.each do |user| %>
+            <%= user.username unless user==current_user%>
+          <% end %>
         <% end %>
-      <% end %>
+        <% if chatroom.messages.any?%>
+          <div class="last_message">
+            <%= chatroom.last_message.user.username %>:
+            <%= chatroom.last_message.content.truncate(27, omission:'...') %><br>
+            <%= chatroom.last_message.created_at.strftime('%F %T') %><br>
+          </div>
+        <% end %>
+        <hr>
+      </div>
     <% end %>
-    <%= chatroom.last_message %>
-    <hr>
+
   <% end %>
 <% else %>
   <p>Currently no chats</p>

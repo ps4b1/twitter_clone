@@ -1,0 +1,8 @@
+<div class="<%= message.user == current_user ? "sent":"reply"%>">
+  <%= link_to profile_path(message.user), class: "profile_link" do %>
+    <%= message.user.username %>
+  <% end %>
+  <div class="message">
+    <%= message.content %>
+  </div>
+</div>
