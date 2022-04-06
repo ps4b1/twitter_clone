@@ -1,0 +1,18 @@
+<% if @chatrooms.any? %>
+  <% @chatrooms.each do |chatroom| %>
+    <hr>
+    <% if !chatroom.room_name.nil? %>
+      <%= chatroom.room_name %>
+    <% else %>
+      <% chatroom.users.each do |user|%>
+        <% if !user==current_user %>
+          <%= user.username %>
+        <% end %>
+      <% end %>
+    <% end %>
+    <%= chatroom.last_message %>
+    <hr>
+  <% end %>
+<% else %>
+  <p>Currently no chats</p>
+<% end %>

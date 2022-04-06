@@ -10,6 +10,9 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_many :posts, dependent: :destroy
 
+  has_many :chatroom_users
+  has_many :chatrooms, through: :chatroom_users, dependent: :destroy
+
   has_many :follower_relations, foreign_key: :follower_id, class_name: 'Relation'
   has_many :followees, through: :follower_relations
 

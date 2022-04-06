@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddRepostableToPosts < ActiveRecord::Migration[6.1]
   def change
     add_column :posts, :repostable_id, :integer, foreign_key: true

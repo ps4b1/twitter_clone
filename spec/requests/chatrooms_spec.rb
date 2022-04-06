@@ -2,17 +2,24 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Messages', type: :request do
+RSpec.describe 'Chatrooms', type: :request do
   describe 'GET /create' do
     it 'returns http success' do
-      get '/messages/create'
+      get '/chatrooms/create'
       expect(response).to have_http_status(:success)
     end
   end
 
   describe 'GET /destroy' do
     it 'returns http success' do
-      get '/messages/destroy'
+      get '/chatrooms/destroy'
+      expect(response).to have_http_status(:success)
+    end
+  end
+
+  describe 'GET /show' do
+    it 'returns http success' do
+      get '/chatrooms/show'
       expect(response).to have_http_status(:success)
     end
   end

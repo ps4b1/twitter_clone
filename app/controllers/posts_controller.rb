@@ -16,11 +16,11 @@ class PostsController < ApplicationController
   def new
     @post = Post.new
     if params[:repostable_id].present? && params[:repostable_type].present?
-      @repostable_id=params[:repostable_id]
-      @repostable_type=params[:repostable_type]
+      @repostable_id = params[:repostable_id]
+      @repostable_type = params[:repostable_type]
     else
-      @repostable_id=nil
-      @repostable_type=nil
+      @repostable_id = nil
+      @repostable_type = nil
     end
   end
 
