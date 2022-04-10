@@ -1,13 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get 'chatroom_users/create'
-  get 'chatroom_users/destroy'
-  resources :chatrooms do
-    resources :messages
-  end
+  resources :chatroom_users, only: %i[create destroy]
+  resources :chatrooms, only: %i[create destroy show index]
+  resources :messages, only: %i[create destroy]
   resources :comments, only: %i[create destroy]
-  resources :chatroom_users
   resources :likes, only: %i[create destroy]
   resources :relationships, only: %i[create destroy]
   resources :posts

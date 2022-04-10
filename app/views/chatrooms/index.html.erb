@@ -16,6 +16,7 @@
             <%= chatroom.last_message.created_at.strftime('%F %T') %><br>
           </div>
         <% end %>
+        <%= link_to "Delete", chatroom_path(chatroom), method: :delete, class: "btn btn-outline-danger" %>
         <hr>
       </div>
     <% end %>

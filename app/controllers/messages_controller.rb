@@ -4,10 +4,10 @@ class MessagesController < ApplicationController
   before_action :set_message, only: [:destroy]
   def create
     @message = Message.new(message_params)
-    @message.chatroom_id = @chatroom.id
-    @message.user = current_user
+    @chatroom = @message.chatroom
     if @message.save
-      redirect_to current_chatroom
+      # redirect_to @message.chatroom
+      ActionCable.server.broadcast 'chatroom', html: render_to_string('chatrooms/_chatroom_messages', layout: false)
     else
       flash[:alert] = 'something went wrong'
     end
@@ -19,11 +19,7 @@ class MessagesController < ApplicationController
   private
 
   def message_params
-    params.require(:message).permit(:chatroom_id, :content)
-  end
-
-  def set_chatroom
-    @chatroom = Chatroom.find(params[:chatroom_id])
+    params.require(:message).permit(:user_id, :chatroom_id, :content)
   end
 
   def set_message

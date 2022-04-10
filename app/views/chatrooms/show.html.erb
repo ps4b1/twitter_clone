@@ -1,11 +1,11 @@
 <div class="chatroom_show">
-  <ul>
-    <% @chatroom.messages.each do |message| %>
-      <div class="d-flex justify-content-<%= message.user==current_user ? "end" : "start"%>">
-        <li>
-         <%=  render message %>
-        </li>
-      </div>
-    <% end %>
-  </ul>
+  <%= render partial: 'chatrooms/chatroom_messages' %>
+  <div class="form-inline">
+  <%= form_for new_message, class: 'form-inline' do |form| %>
+    <%= form.hidden_field :user_id, value: current_user.id%>
+    <%= form.hidden_field :chatroom_id, value: @chatroom.id %>
+    <%= form.text_area :content %> <br>
+    <%= form.submit "Send", class: "btn btn-outline-primary" %>
+  <% end %>
+  </div>
 </div>

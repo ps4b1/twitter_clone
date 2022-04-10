@@ -27,7 +27,9 @@ class User < ApplicationRecord
   def avatar_thumbnail
     avatar.variant(resize: '150x150!').processed
   end
-
+  def chatroom_search
+    chatrooms.where(user: current_user)
+  end
   private
 
   def add_default_avatar
