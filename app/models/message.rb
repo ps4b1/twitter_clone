@@ -2,6 +2,6 @@
 
 class Message < ApplicationRecord
   belongs_to :user
-  belongs_to :chatroom
+  belongs_to :chatroom, dependent: :destroy
   validates :content, presence: true
 end

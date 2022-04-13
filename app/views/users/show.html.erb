@@ -23,10 +23,17 @@
       <% else %>
         <%= link_to "Unfollow", relationship_path(@user), method: :delete, class: "btn btn-outline-primary" %>
       <% end %>
-      <% if chatroom_with_user?(@user).nil? %>
-        <%= link_to "Message", chatroom_users_path(user: @user), method: :post, class: "btn btn-outline-primary" %>
-      <% else %>
-        <%= link_to "Message", chatroom_path(chatroom_with_user?(@user)),  class: "btn btn-outline-primary" %>
+
+      <% if @user != current_user %>
+        <%= form_for cr = Chatroom.new do |f| %>
+          <%= f.hidden_field :direct, value: true %>
+
+          <%= f.fields_for :chatroom_users, [@user, current_user], include_id: false do |ff| %>
+            <%= ff.hidden_field :user_id, value: ff.object.id %>
+          <% end %>
+
+          <%= f.submit 'Message', class: "btn btn-outline-primary" %>
+        <% end %>
       <% end %>
     </div>
   <% end %>
