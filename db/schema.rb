@@ -67,24 +67,6 @@ ActiveRecord::Schema.define(version: 2022_04_10_154531) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "followers", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "subscriber_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["subscriber_id"], name: "index_followers_on_subscriber_id"
-    t.index ["user_id"], name: "index_followers_on_user_id"
-  end
-
-  create_table "followings", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "subscribed_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["subscribed_id"], name: "index_followings_on_subscribed_id"
-    t.index ["user_id"], name: "index_followings_on_user_id"
-  end
-
   create_table "likes", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "likeable_id", null: false
@@ -143,10 +125,6 @@ ActiveRecord::Schema.define(version: 2022_04_10_154531) do
   add_foreign_key "chatroom_users", "chatrooms"
   add_foreign_key "chatroom_users", "users"
   add_foreign_key "comments", "users"
-  add_foreign_key "followers", "users"
-  add_foreign_key "followers", "users", column: "subscriber_id"
-  add_foreign_key "followings", "users"
-  add_foreign_key "followings", "users", column: "subscribed_id"
   add_foreign_key "likes", "users"
   add_foreign_key "messages", "chatrooms"
   add_foreign_key "messages", "users"

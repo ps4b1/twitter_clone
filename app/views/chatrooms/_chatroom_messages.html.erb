@@ -1,5 +1,5 @@
 <div class="chatroom_content">
-  <ul>
+  <ul class="message_list">
     <% @chatroom.messages.each do |message| %>
       <div class="d-flex justify-content-<%= message.user==current_user ? "end" : "start"%>">
         <li>

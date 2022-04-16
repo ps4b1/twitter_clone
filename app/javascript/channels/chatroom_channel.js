@@ -10,8 +10,8 @@ consumer.subscriptions.create("ChatroomChannel", {
   },
 
   received(data) {
-    if ($('.chatroom_content')){
-      $('.chatroom_content').html(data.html);
+    if ($('.message_list')){
+      $('.message_list').append('<div class="d-flex justify-content-end"><li><div class="sent">'+data.username+'<div class="message">'+data.content+'</div></div></li></div>');
     }
   }
 });

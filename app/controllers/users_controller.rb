@@ -5,4 +5,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @posts = @user.posts.order(:created_at).reverse
   end
+
+  def index
+    @users=User.all
+  end
 end

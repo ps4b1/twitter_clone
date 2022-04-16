@@ -1,3 +1,7 @@
+<div class="chatroom_box">
+  <%= link_to "DM", users_path, class: "btn btn-outline-primary" %>
+  <%= link_to "Group", users_path, class: "btn btn-outline-primary" %>
+</div>
 <% if @chatrooms.any? %>
   <% @chatrooms.each do |chatroom| %>
     <%= link_to chatroom_path(chatroom), class:"link_to_chatroom" do%>
