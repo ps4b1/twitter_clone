@@ -12,7 +12,7 @@ class PostsController < ApplicationController
   # GET /posts/1 or /posts/1.json
   def show; end
 
-  # GET /posts/new
+  # GET /posts/group.html.erb
   def new
     @post = Post.new
     if params[:repostable_id].present? && params[:repostable_type].present?
@@ -37,7 +37,7 @@ class PostsController < ApplicationController
         format.html { redirect_to post_url(@post), notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :group, status: :unprocessable_entity }
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end

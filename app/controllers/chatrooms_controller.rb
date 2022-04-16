@@ -16,6 +16,13 @@ class ChatroomsController < ApplicationController
     end
   end
 
+  def group
+    @chatroom = Chatroom.create
+    @users = User.all
+    chatroom_users = ChatroomUser.new(user: current_user, chatroom: @chatroom)
+    chatroom_users.save
+  end
+
   def destroy
     @chatroom = Chatroom.find(params[:id])
     @chatroom.destroy

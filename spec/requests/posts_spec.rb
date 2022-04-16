@@ -42,7 +42,7 @@ RSpec.describe '/posts', type: :request do
     end
   end
 
-  describe 'GET /new' do
+  describe 'GET /group.html.erb' do
     it 'renders a successful response' do
       get new_post_url
       expect(response).to be_successful
@@ -59,7 +59,7 @@ RSpec.describe '/posts', type: :request do
 
   describe 'POST /create' do
     context 'with valid parameters' do
-      it 'creates a new Post' do
+      it 'creates a group.html.erb Post' do
         expect do
           post posts_url, params: { post: valid_attributes }
         end.to change(Post, :count).by(1)
@@ -72,13 +72,13 @@ RSpec.describe '/posts', type: :request do
     end
 
     context 'with invalid parameters' do
-      it 'does not create a new Post' do
+      it 'does not create a group.html.erb Post' do
         expect do
           post posts_url, params: { post: invalid_attributes }
         end.to change(Post, :count).by(0)
       end
 
-      it "renders a successful response (i.e. to display the 'new' template)" do
+      it "renders a successful response (i.e. to display the 'group.html.erb' template)" do
         post posts_url, params: { post: invalid_attributes }
         expect(response).to be_successful
       end

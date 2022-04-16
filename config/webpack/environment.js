@@ -8,6 +8,6 @@ environment.plugins.append("Provide", new webpack.ProvidePlugin({
     jQuery: 'jquery',
     Popper: ['popper.js', 'default']  // Not a typo, we're still using popper.js here
 }))
-// End new addition
+// End group.html.erb addition
 
 module.exports = environment

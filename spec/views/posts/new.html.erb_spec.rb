@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'posts/new', type: :view do
+RSpec.describe 'posts/group.html.erb', type: :view do
   before(:each) do
     assign(:post, Post.new(
                     description: 'MyText',
@@ -10,7 +10,7 @@ RSpec.describe 'posts/new', type: :view do
                   ))
   end
 
-  it 'renders new post form' do
+  it 'renders group.html.erb post form' do
     render
 
     assert_select 'form[action=?][method=?]', posts_path, 'post' do

@@ -1,0 +1,11 @@
+<% @users.each do |user| %>
+  <% unless user==current_user %>
+    <div class="user_box">
+      <%= user.username %>
+      <%= link_to 'Add', chatroom_users_path(user: user.id, chatroom: @chatroom.id ), method: :post,class: "btn btn-outline-primary"%>
+      <%= link_to 'View', profile_path(user), class: "btn btn-outline-primary" %>
+      <hr>
+    </div>
+  <% end %>
+<% end %>
+<%= link_to "Start chating", chatroom_path(@chatroom), class: "btn btn-outline-primary" %>

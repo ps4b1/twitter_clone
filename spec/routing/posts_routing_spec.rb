@@ -8,8 +8,8 @@ RSpec.describe PostsController, type: :routing do
       expect(get: '/posts').to route_to('posts#index')
     end
 
-    it 'routes to #new' do
-      expect(get: '/posts/new').to route_to('posts#new')
+    it 'routes to #group.html.erb' do
+      expect(get: '/posts/group.html.erb').to route_to('posts#new')
     end
 
     it 'routes to #show' do

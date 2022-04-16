@@ -18,7 +18,7 @@
 
     <div class="field">
       <%= f.label :username %><br />
-      <%= f.text_field :username, autocomplete: "new-usernaem" %>
+      <%= f.text_field :username, autocomplete: "group.html.erb-usernaem" %>
     </div>
     <br>
 
@@ -34,7 +34,7 @@
 
     <div class="field">
       <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-      <%= f.password_field :password, autocomplete: "new-password" %>
+      <%= f.password_field :password, autocomplete: "group.html.erb-password" %>
       <% if @minimum_password_length %>
         <br />
         <em><%= @minimum_password_length %> characters minimum</em>
@@ -43,7 +43,7 @@
 
     <div class="field">
       <%= f.label :password_confirmation %><br />
-      <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+      <%= f.password_field :password_confirmation, autocomplete: "group.html.erb-password" %>
     </div>
 
     <div class="field">
