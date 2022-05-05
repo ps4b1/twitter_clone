@@ -17,10 +17,12 @@ class ChatroomsController < ApplicationController
   end
 
   def group
-    @chatroom = Chatroom.create
-    @users = User.all
-    chatroom_users = ChatroomUser.new(user: current_user, chatroom: @chatroom)
-    chatroom_users.save
+    @chatroom = Chatroom.new
+    # (room_name: 'New group')
+    # @chatroom.save
+    @users = User.where.not(id: current_user.id)
+    # chatroom_users = ChatroomUser.new(user: current_user, chatroom: @chatroom)
+    # chatroom_users.save
   end
 
   def destroy

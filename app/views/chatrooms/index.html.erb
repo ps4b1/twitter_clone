@@ -7,11 +7,7 @@
     <%= link_to chatroom_path(chatroom), class:"link_to_chatroom" do%>
       <div class="chatroom_box">
         <% if chatroom.direct == false %>
-          <% if chatroom.room_name.nil? %>
-            <%= "new group" %>
-          <% else %>
             <%= chatroom.room_name %>
-          <% end %>
         <% else %>
           <% chatroom.users.each do |user| %>
             <%= user.username unless user==current_user%>
