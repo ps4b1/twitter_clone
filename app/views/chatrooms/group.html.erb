@@ -1,22 +1,6 @@
-<% @users.each do |user| %>
-    <div class="user_box">
-      <%= user.username %>
-      <%= link_to 'Add', chatroom_users_path(user: user.id, chatroom: @chatroom.id ), method: :post, class: "btn btn-outline-primary add_button"%>
-      <%= link_to 'View', profile_path(user), class: "btn btn-outline-primary" %>
-      <hr>
-    </div>
+<%= form_for @chatroom do |f| %>
+  <%= f.text_field :room_name, placeholder: "Enter group name" %>
+  <%= f.hidden_field :direct, value: false %>
+  <%= f.collection_select :user_ids, @users, :id, :username, {}, { multiple: true, class: "form-select w-50%" } %>
+  <%= f.button 'Create', class: 'btn  btn-outline-primary' %>
 <% end %>
-<%= link_to "Start chating", chatroom_path(@chatroom), class: "btn btn-outline-primary" %>
-
-<%= javascript_pack_tag 'add' %>
-
-
-<!-- Ovako nešto bi trebalo biti -->
-<%#= form_for @chatroom do |f| %>
-  <%#= f.text_area :room_name %>
-  <%#= f.hidden_field :direct, value: false %>
-  <%#= f.fields_for :chatroom_users do |ff| %>
-    <%#= ff.collection_select :post, :user_ids, @users, :id, :username, {}, {:multiple => true} %>
-  <%# end %>
-  <%#= f.submit 'Message', class: "btn btn-outline-primary" %>
-<%# end %>

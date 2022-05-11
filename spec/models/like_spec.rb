@@ -6,17 +6,17 @@ RSpec.describe Like, type: :model do
   before do
     @user = FactoryBot.create(:user)
     @post = FactoryBot.create(:post)
-    @like=Like.new(user: @user, likeable: @post)
+    @like = Like.new(user: @user, likeable: @post)
   end
   it 'Should be valid' do
     expect(@like).to be_valid
   end
   it 'should not be valid without user' do
-    @like.user=nil
+    @like.user = nil
     expect(@like).not_to be_valid
   end
   it 'should not be valid without likeable' do
-    @like.likeable=nil
+    @like.likeable = nil
     expect(@like).not_to be_valid
   end
 end

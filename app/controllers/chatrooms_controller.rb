@@ -2,26 +2,32 @@
 
 class ChatroomsController < ApplicationController
   def create
-    if (direct_chat = direct_chat(chatroom_params))
-      return redirect_to direct_chat
-    end
+    @chatroom = Chatroom.new(chatroom_params)
 
-    chatroom = Chatroom.new(chatroom_params)
+    respond_to do |format|
+      if @chatroom.valid?
+        if @chatroom.direct
+          chatroom = Chatroom.find_direct(current_user, User.find(params[:user_ids].first))
+          return redirect_to(chatroom_path(chatroom)) if chatroom.present?
+        end
 
-    if chatroom.save
-      redirect_to chatroom_path(chatroom)
-    else
-      flash[alert] = 'Something went wrong'
-      redirect_to root_path
+        ChatroomUser.create!(chatroom: @chatroom, user: current_user)
+        @chatroom.save
+
+        format.html do
+          redirect_to chatroom_path(@chatroom)
+        end
+        format.json { render :show, status: :created, location: @chatroom }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @chatroom.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   def group
-    @chatroom = Chatroom.new(room_name: 'New group')
-    @chatroom.save
+    @chatroom = Chatroom.new
     @users = User.where.not(id: current_user.id)
-    chatroom_users = ChatroomUser.new(user: current_user, chatroom: @chatroom)
-    chatroom_users.save
   end
 
   def destroy
@@ -51,6 +57,6 @@ class ChatroomsController < ApplicationController
   end
 
   def chatroom_params
-    params.require(:chatroom).permit(:direct, chatroom_users_attributes: [:user_id])
+    params.require(:chatroom).permit(:room_name, :direct, user_ids: [])
   end
 end
