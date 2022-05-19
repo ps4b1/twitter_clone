@@ -1,0 +1,25 @@
+<h1 class="mb-5"> Chatroom info</h1>
+<%= form_with(model: @chatroom) do |f| %>
+  <div class="mt-2">
+  <%= f.label :room_name %>
+  <%= f.text_field :room_name, placeholder: @chatroom.room_name %>
+  </div>
+  <div class="actions mt-2">
+    <%= f.submit 'Change room name', class: "btn btn-outline-primary" %>
+  </div>
+<% end %>
+
+<h3>Participants list:</h3>
+<div class="participant_list">
+  <ul>
+  <% @users.each do |user|%>
+    <li>
+      <%=link_to user.username, profile_path(user), class: 'link_to_profile participant' %>
+    </li>
+  <% end %>
+  </ul>
+</div>
+
+<div class="action">
+  <%= link_to 'Leave group', chatroom_user_path(chatroom: @chatroom.id, user: current_user.id), method: :delete, class: 'btn btn-outline-danger'%>
+</div>

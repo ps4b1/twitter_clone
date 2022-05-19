@@ -2,13 +2,7 @@
   <% unless user==current_user %>
     <div class="user_box">
       <%= user.username %>
-      <%= form_for cr = Chatroom.new do |f| %>
-        <%= f.hidden_field :direct, value: true %>
-        <%= f.fields_for :chatroom_users, [user, current_user], include_id: false do |ff| %>
-          <%= ff.hidden_field :user_id, value: ff.object.id %>
-        <% end %>
-        <%= f.submit 'Message', class: "btn btn-outline-primary" %>
-      <% end %>
+      <%= link_to 'Message', { :controller => :chatrooms, :action => :create, :user_ids => [user.id], :direct => true } , method: :post, class: 'btn btn-outline-primary'%>
       <%= link_to 'View', profile_path(user), class: "btn btn-outline-primary" %>
       <hr>
     </div>

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ChatroomsController < ApplicationController
+  before_action :set_chatroom, only: %i[show edit update destroy]
+
   def create
     @chatroom = Chatroom.new(chatroom_params)
 
@@ -19,8 +21,8 @@ class ChatroomsController < ApplicationController
         end
         format.json { render :show, status: :created, location: @chatroom }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @chatroom.errors, status: :unprocessable_entity }
+        format.html { redirect_to :group, alert: "Need to add group name or select participantes" }
+        format.json { render json: @chatroom.errors }
       end
     end
   end
@@ -31,7 +33,6 @@ class ChatroomsController < ApplicationController
   end
 
   def destroy
-    @chatroom = Chatroom.find(params[:id])
     @chatroom.destroy
     redirect_to chatrooms_path
   end
@@ -41,11 +42,30 @@ class ChatroomsController < ApplicationController
   end
 
   def show
-    @chatroom = Chatroom.find(params[:id])
     @message = @chatroom.messages.order(:created_at)
   end
 
+  def edit
+    @users = @chatroom.users.all.where.not(id: current_user.id)
+  end
+
+  def update
+    respond_to do |format|
+      if @chatroom.update(chatroom_params)
+        format.html { redirect_to edit_chatroom_path(@chatroom), notice: "Chatroom was successfully updated to #{@chatroom.room_name}." }
+        format.json { render :show, status: :ok, location: @chatroom }
+      else
+        format.html { render :edit, alert: 'something went wrong' }
+        format.json { render json: @chatroom.errors}
+      end
+    end
+  end
+
   private
+
+  def set_chatroom
+    @chatroom = Chatroom.find(params[:id])
+  end
 
   def direct_chat(attr)
     return unless attr[:direct]
@@ -57,6 +77,10 @@ class ChatroomsController < ApplicationController
   end
 
   def chatroom_params
-    params.require(:chatroom).permit(:room_name, :direct, user_ids: [])
+    if params[:chatroom]
+      params.require(:chatroom).permit(:room_name, :direct, user_ids: [])
+    else
+      params.permit(:room_name, :direct, user_ids: [])
+    end
   end
 end

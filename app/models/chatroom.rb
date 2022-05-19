@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Chatroom < ApplicationRecord
-  validates :room_name, presence: true, if: proc { |c| c.direct.nil? }
+  validates :room_name, presence: true, if: proc { |c| c.direct == false }
   has_many :messages, dependent: :destroy
   has_many :chatroom_users, dependent: :destroy
   has_many :users, through: :chatroom_users

@@ -1,3 +1,14 @@
+<% if @chatroom.direct == false %>
+  <%=link_to @chatroom.room_name,edit_chatroom_path(@chatroom), class: "link_to_profile"%>
+<% else %>
+  <% @chatroom.users.each do |user| %>
+    <% unless  user==current_user%>
+      <h2>
+      <%=link_to user.username,profile_path(user), class: "link_to_profile "%>
+      </h2>
+    <% end %>
+  <% end %>
+<% end %>
 <div class="chatroom_show">
   <%= render partial: 'chatrooms/chatroom_messages' %>
   <div class="form-inline">

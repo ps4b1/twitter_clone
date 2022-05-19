@@ -2,17 +2,14 @@
 
 class ChatroomUsersController < ApplicationController
   include CurrentChatroom
-  before_action :create_chatroom, only: [:create]
-
-  def create
-    user = User.find(params[:user])
-    chatroom = Chatroom.find(params[:chatroom])
-    @chatroom_users = ChatroomUser.new(user: user, chatroom: chatroom)
-    @chatroom_users.save
-  end
 
   def destroy
-    @chatroom_user = ChatroomUser.find.where(chatroom_id: chatroom, user_id: user).first
+    current_chatroom=Chatroom.find(params[:chatroom])
+    @chatroom_user = ChatroomUser.find_by(chatroom_id: params[:chatroom], user_id: params[:user])
     @chatroom_user.destroy
+    redirect_to chatrooms_path
+    if current_chatroom.users.count == 0
+      current_chatroom.destroy
+    end
   end
 end
