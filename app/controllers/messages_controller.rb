@@ -7,8 +7,8 @@ class MessagesController < ApplicationController
     @chatroom = @message.chatroom
     if @message.save
       # redirect_to @message.chatroom
-      ActionCable.server.broadcast 'chatroom', content: @message.content, username: @message.user.username,
-                                               current: current_user
+      ActionCable.server.broadcast 'chatroom', content: @message.content, username: @message.user.username, 
+                                               id: @message.user.id
     else
       flash[:alert] = 'something went wrong'
     end
