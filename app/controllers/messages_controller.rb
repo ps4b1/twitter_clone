@@ -4,11 +4,10 @@ class MessagesController < ApplicationController
   before_action :set_message, only: [:destroy]
   def create
     @message = Message.new(message_params)
-    @chatroom = @message.chatroom
     if @message.save
       # redirect_to @message.chatroom
       ActionCable.server.broadcast 'chatroom', content: @message.content, username: @message.user.username,
-                                               id: @message.user.id
+                                               id: @message.user.id, chatroom: @message.chatroom.id
     else
       flash[:alert] = 'something went wrong'
     end

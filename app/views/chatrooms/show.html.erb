@@ -12,13 +12,13 @@
   <% end %>
 <% end %>
 <div class="chatroom_show">
-  <div id="chatroom_data" data-current-user="<%= current_user.id %>"></div>
+  <div id="chatroom_data" data-current-user="<%= current_user.id %>" data-current-chatroom="<%= @chatroom.id %>"></div>
   <%= render partial: 'chatrooms/chatroom_messages' %>
   <div class="form-inline">
-    <%= form_for Message.new, class: 'form-inline', remote: true do |form| %>
+    <%= form_for Message.new, class: 'form-inline',remote: true do |form| %>
       <%= form.hidden_field :user_id, value: current_user.id%>
       <%= form.hidden_field :chatroom_id, value: @chatroom.id %>
-      <%= form.text_area :content %> <br>
+      <%= form.text_area :content, id: 'my_form' %> <br>
       <%= form.submit "Send", class: "btn btn-outline-primary" %>
     <% end %>
   </div>
