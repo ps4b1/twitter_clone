@@ -1,5 +1,7 @@
 <% if @chatroom.direct == false %>
-  <%=link_to @chatroom.room_name,edit_chatroom_path(@chatroom), class: "link_to_profile"%>
+  <h2>
+    <%=link_to @chatroom.room_name,edit_chatroom_path(@chatroom), class: "link_to_profile"%>
+  </h2>
 <% else %>
   <% @chatroom.users.each do |user| %>
     <% unless  user==current_user%>

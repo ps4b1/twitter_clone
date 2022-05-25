@@ -13,7 +13,7 @@ class ChatroomsController < ApplicationController
           return redirect_to(chatroom_path(chatroom)) if chatroom.present?
         end
 
-        ChatroomUser.create!(chatroom: @chatroom, user: current_user)
+        ChatroomUser.create!(chatroom: @chatroom, user: current_user, admin: true)
         @chatroom.save
 
         format.html do
@@ -21,7 +21,7 @@ class ChatroomsController < ApplicationController
         end
         format.json { render :show, status: :created, location: @chatroom }
       else
-        format.html { redirect_to :group, alert: "Need to add group name or select participantes" }
+        format.html { redirect_to :group, alert: 'Need to add group name or select participantes' }
         format.json { render json: @chatroom.errors }
       end
     end
@@ -52,11 +52,14 @@ class ChatroomsController < ApplicationController
   def update
     respond_to do |format|
       if @chatroom.update(chatroom_params)
-        format.html { redirect_to edit_chatroom_path(@chatroom), notice: "Chatroom was successfully updated to #{@chatroom.room_name}." }
+        format.html do
+          redirect_to edit_chatroom_path(@chatroom),
+                      notice: "Chatroom was successfully updated to #{@chatroom.room_name}."
+        end
         format.json { render :show, status: :ok, location: @chatroom }
       else
         format.html { render :edit, alert: 'something went wrong' }
-        format.json { render json: @chatroom.errors}
+        format.json { render json: @chatroom.errors }
       end
     end
   end

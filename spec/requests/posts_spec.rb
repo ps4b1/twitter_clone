@@ -42,7 +42,6 @@ RSpec.describe '/posts', type: :request do
     end
   end
 
-
   describe 'GET /edit' do
     it 'renders a successful response' do
       post = Post.create! valid_attributes
