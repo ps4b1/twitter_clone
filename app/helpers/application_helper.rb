@@ -20,8 +20,4 @@ module ApplicationHelper
   def new_comment
     Comment.new
   end
-
-  def new_message
-    Message.new
-  end
 end

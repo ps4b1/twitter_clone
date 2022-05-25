@@ -10,8 +10,21 @@ consumer.subscriptions.create("ChatroomChannel", {
   },
 
   received(data) {
-    if ($('.message_list')){
-      $('.message_list').append('<div class="d-flex justify-content-end"><li><div class="sent">'+data.username+'<div class="message">'+data.content+'</div></div></li></div>');
+      let currentUserId = $('#chatroom_data').data('current-user');
+
+      let align = currentUserId === data.id ? 'end' : 'start';
+      let klass = currentUserId === data.id ? 'sent' : 'reply';
+
+      $('.message_list').append(
+          '<div class="d-flex justify-content-' + align + '">' +
+            '<li>' +
+                '<div class="'+ klass +'">' +
+                '<a class="profile_link" href="/profile/'+ data.id + '">' +
+                    data.username +
+                '</a>' +
+                '<div class="message">' + data.content +  '</div>' +
+                '</div>' +
+            '</li>' +
+          '</div>');
     }
-  }
 });
