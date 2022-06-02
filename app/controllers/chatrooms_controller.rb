@@ -46,10 +46,19 @@ class ChatroomsController < ApplicationController
   end
 
   def edit
+
+    if @chatroom.direct
+      redirect_to chatroom_path(@chatroom)
+      flash[:alert] = "Can't edit direct message"
+    end
     @users = @chatroom.users.all.where.not(id: current_user.id)
   end
 
   def update
+    if @chatroom.direct
+      redirect_to chatroom_path(@chatroom)
+      flash[:alert] = "Can't edit direct message"
+    end
     respond_to do |format|
       if @chatroom.update(chatroom_params)
         format.html do

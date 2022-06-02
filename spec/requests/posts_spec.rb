@@ -19,7 +19,7 @@ RSpec.describe PostsController, type: :controller do
   # Post. As you add validations to Post, be sure to
   # adjust the attributes here as well.
   login_user
-  # let!(:user) {FactoryBot.create(:user)}
+
   let(:valid_attributes) do
     {
       'id' => '1',
@@ -64,6 +64,14 @@ RSpec.describe PostsController, type: :controller do
       expect(response).to be_successful
     end
   end
+
+  describe 'GET /new' do
+    it 'renders a successful response' do
+      get :new
+      expect(response).to be_successful
+    end
+  end
+
 
   describe 'POST /create' do
     context 'with valid parameters' do
