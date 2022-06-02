@@ -1,4 +1,4 @@
-<%= form_for new_comment do |form| %>
+<%= form_for Comment.new do |form| %>
   <%= form.hidden_field :commentable_id, value: id_pass(object)%>
   <%= form.hidden_field :commentable_type, value: object.class %>
   <%= form.text_area :description %> <br>

@@ -2,18 +2,34 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Messages', type: :request do
-  describe 'GET /create' do
-    it 'returns http success' do
-      get '/messages/create'
-      expect(response).to have_http_status(:success)
+RSpec.describe MessagesController, type: :controller do
+  login_user
+  let!(:user2) {FactoryBot.create(:user)}
+  let!(:chatroom) {FactoryBot.create(:chatroom)}
+  let (:valid_attributes) do
+    {
+      'content' => 'new message',
+      'user_id' => user.id,
+      'chatroom_id' => chatroom.id
+    }
     end
+  let (:invalid_attributes) do
+    {
+      'content' => '',
+      'user_id' => 'string',
+      'chatroom_id' => 'string'
+    }
   end
-
-  describe 'GET /destroy' do
-    it 'returns http success' do
-      get '/messages/destroy'
-      expect(response).to have_http_status(:success)
+  describe 'POST /create' do
+    it 'creates message with valid attributes' do
+      expect do
+        post :create, params: { message: valid_attributes }
+      end.to change(Message, :count).by(1)
+    end
+    it 'doesnt create message with invalid attributes' do
+      expect do
+        post :create, params: { message: invalid_attributes }
+      end.to change(Message, :count).by(0)
     end
   end
 end

@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
     if @comment.save
       redirect_to root_path
     else
+      redirect_to root_path
       flash[:alert] = 'Something went wrong'
     end
   end
@@ -21,6 +22,3 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:commentable_id, :commentable_type, :description)
   end
 end
-# što je kreativnost
-# što piksar radi da je org kreativna
-# koja je uloga kreativnosti pojedinca za kreativnost org
