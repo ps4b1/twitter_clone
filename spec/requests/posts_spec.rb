@@ -19,7 +19,7 @@ RSpec.describe PostsController, type: :controller do
   # Post. As you add validations to Post, be sure to
   # adjust the attributes here as well.
   login_user
-  let!(:user) {FactoryBot.create(:user)}
+  # let!(:user) {FactoryBot.create(:user)}
   let(:valid_attributes) do
     {
       'id' => '1',
@@ -37,7 +37,7 @@ RSpec.describe PostsController, type: :controller do
   describe 'GET /index' do
     it 'renders a successful response' do
       post=Post.new(valid_attributes)
-      post.user_id = user
+      post.user = user
       post.save
       get :index
       expect(response).to be_successful
@@ -57,7 +57,7 @@ RSpec.describe PostsController, type: :controller do
   describe 'GET /edit' do
     it 'renders a successful response' do
       post=Post.new(valid_attributes)
-      post.user_id = 1
+      post.user = user
       post.save
       puts post.id
       get :edit, params: { id: post.id }
@@ -104,7 +104,7 @@ RSpec.describe PostsController, type: :controller do
 
       it 'updates the requested post' do
         post=Post.new(valid_attributes)
-        post.user_id = 1
+        post.user = user
         post.save
         patch :update, params: { id: post.id, post: new_attributes }
         post.reload
@@ -114,7 +114,7 @@ RSpec.describe PostsController, type: :controller do
 
       it 'redirects to the post' do
         post=Post.new(valid_attributes)
-        post.user_id = 1
+        post.user = user
         post.save
         patch :update, params: { id: post.id, post: new_attributes }
         post.reload
@@ -125,7 +125,7 @@ RSpec.describe PostsController, type: :controller do
     context 'with invalid parameters' do
       it "renders a successful response (i.e. to display the 'edit' template)" do
         post=Post.new(valid_attributes)
-        post.user_id = 1
+        post.user = user
         post.save
         patch :update, params: { id: post.id, post: invalid_attributes }
         expect(response).to render_template("posts/edit")
@@ -136,9 +136,8 @@ RSpec.describe PostsController, type: :controller do
   describe 'DELETE /destroy' do
     it 'destroys the requested post' do
       post=Post.new(valid_attributes)
-      post.user_id = 1
+      post.user = user
       post.save
-      puts Post.count
       expect do
         delete :destroy, params: {id: post.id}
       end.to change(Post, :count).by(-1)
@@ -147,10 +146,10 @@ RSpec.describe PostsController, type: :controller do
 
     it 'redirects to the posts list' do
       post=Post.new(valid_attributes)
-      post.user_id = 1
+      post.user = user
       post.save
       delete :destroy, params: {id: post.id}
-      expect(response).to redirect_to(profile_path(1))
+      expect(response).to redirect_to(profile_path(user))
     end
   end
 end
