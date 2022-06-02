@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe LikesController, type: :controller do
   login_user
-  let!(:tweet) {FactoryBot.create(:post)}
+  let!(:tweet) {FactoryBot.create(:post, user: user)}
   let(:valid_attributes) do
     {
       'likeable_type' => tweet.class,

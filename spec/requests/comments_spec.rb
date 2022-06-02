@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe CommentsController, type: :controller do
   login_user
-  let!(:tweet) {FactoryBot.create(:post)}
+  let!(:tweet) {FactoryBot.create(:post, user: user)}
   let(:valid_attributes) do
     {
       'description' => 'new content',
