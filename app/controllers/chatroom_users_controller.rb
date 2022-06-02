@@ -13,7 +13,9 @@ class ChatroomUsersController < ApplicationController
     if params[:user] == current_user.id.to_s
       redirect_to chatrooms_path
     end
-
+    if !admin && current_chatroom.users.count > 0
+      redirect_to edit_chatroom_path(current_chatroom)
+    end
     if admin && current_chatroom.users.count > 0
       next_user = current_chatroom.chatroom_users.first
       next_user.update(admin: true)

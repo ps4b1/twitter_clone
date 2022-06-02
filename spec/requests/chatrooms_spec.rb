@@ -140,7 +140,7 @@ RSpec.describe ChatroomsController, type: :controller do
         expect(response).to be_redirect
       end
 
-      it 'redirects to the post' do
+      it 'redirects to the edit_chatroom' do
         chatroom = Chatroom.new(valid_attributes_group)
         chatroom.save
         chatroom_user =ChatroomUser.new(id: chatroom.users.count + 1, chatroom_id: chatroom.id, user_id: user.id, admin: true)
@@ -169,7 +169,7 @@ RSpec.describe ChatroomsController, type: :controller do
   end
 
   describe 'DELETE /destroy' do
-    it 'destroys the requested post' do
+    it 'destroys the requested chatroom' do
       chatroom = Chatroom.new(valid_attributes_group)
       chatroom.save
       chatroom_user =ChatroomUser.new(id: chatroom.users.count + 1, chatroom_id: chatroom.id, user_id: user.id, admin: true)
@@ -180,7 +180,7 @@ RSpec.describe ChatroomsController, type: :controller do
 
     end
 
-    it 'redirects to the posts list' do
+    it 'redirects to the chatroom list' do
       chatroom = Chatroom.new(valid_attributes_group)
       chatroom.save
       chatroom_user =ChatroomUser.new(id: chatroom.users.count + 1, chatroom_id: chatroom.id, user_id: user.id, admin: true)
