@@ -14,66 +14,82 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe '/posts', type: :request do
+RSpec.describe PostsController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Post. As you add validations to Post, be sure to
   # adjust the attributes here as well.
+  login_user
+  let!(:user) {FactoryBot.create(:user)}
   let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
+    {
+      'id' => '1',
+      'content' => 'new post'
+    }
   end
 
   let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
+    {
+      'id' => 'a',
+      'content' => '1'
+    }
   end
 
   describe 'GET /index' do
     it 'renders a successful response' do
-      Post.create! valid_attributes
-      get posts_url
+      post=Post.new(valid_attributes)
+      post.user_id = user
+      post.save
+      get :index
       expect(response).to be_successful
     end
   end
 
   describe 'GET /show' do
     it 'renders a successful response' do
-      post = Post.create! valid_attributes
-      get post_url(post)
+      post=Post.new(valid_attributes)
+      post.user = user
+      post.save
+      get :show, params: { id: post.id }
       expect(response).to be_successful
     end
   end
 
   describe 'GET /edit' do
     it 'renders a successful response' do
-      post = Post.create! valid_attributes
-      get edit_post_url(post)
+      post=Post.new(valid_attributes)
+      post.user_id = 1
+      post.save
+      puts post.id
+      get :edit, params: { id: post.id }
       expect(response).to be_successful
     end
   end
 
   describe 'POST /create' do
     context 'with valid parameters' do
-      it 'creates a group.html.erb Post' do
+
+      it 'does creates a Post' do
         expect do
-          post posts_url, params: { post: valid_attributes }
+          post :create, params: { post: valid_attributes }
         end.to change(Post, :count).by(1)
       end
 
       it 'redirects to the created post' do
-        post posts_url, params: { post: valid_attributes }
+        post :create, params: { post: valid_attributes }
         expect(response).to redirect_to(post_url(Post.last))
       end
     end
 
     context 'with invalid parameters' do
-      it 'does not create a group.html.erb Post' do
+      it 'does not create a Post' do
         expect do
-          post posts_url, params: { post: invalid_attributes }
+          post :create, params: { post: invalid_attributes }
         end.to change(Post, :count).by(0)
       end
 
-      it "renders a successful response (i.e. to display the 'group.html.erb' template)" do
-        post posts_url, params: { post: invalid_attributes }
-        expect(response).to be_successful
+      it "renders a successful response" do
+        post :create, params: { post: invalid_attributes }
+        expect(response).to render_template('posts/new')
       end
     end
   end
@@ -81,19 +97,26 @@ RSpec.describe '/posts', type: :request do
   describe 'PATCH /update' do
     context 'with valid parameters' do
       let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
+        {
+          'content' => 'edited'
+        }
       end
 
       it 'updates the requested post' do
-        post = Post.create! valid_attributes
-        patch post_url(post), params: { post: new_attributes }
+        post=Post.new(valid_attributes)
+        post.user_id = 1
+        post.save
+        patch :update, params: { id: post.id, post: new_attributes }
         post.reload
-        skip('Add assertions for updated state')
+        puts post.content
+        expect(response).to be_redirect
       end
 
       it 'redirects to the post' do
-        post = Post.create! valid_attributes
-        patch post_url(post), params: { post: new_attributes }
+        post=Post.new(valid_attributes)
+        post.user_id = 1
+        post.save
+        patch :update, params: { id: post.id, post: new_attributes }
         post.reload
         expect(response).to redirect_to(post_url(post))
       end
@@ -101,25 +124,33 @@ RSpec.describe '/posts', type: :request do
 
     context 'with invalid parameters' do
       it "renders a successful response (i.e. to display the 'edit' template)" do
-        post = Post.create! valid_attributes
-        patch post_url(post), params: { post: invalid_attributes }
-        expect(response).to be_successful
+        post=Post.new(valid_attributes)
+        post.user_id = 1
+        post.save
+        patch :update, params: { id: post.id, post: invalid_attributes }
+        expect(response).to render_template("posts/edit")
       end
     end
   end
 
   describe 'DELETE /destroy' do
     it 'destroys the requested post' do
-      post = Post.create! valid_attributes
+      post=Post.new(valid_attributes)
+      post.user_id = 1
+      post.save
+      puts Post.count
       expect do
-        delete post_url(post)
+        delete :destroy, params: {id: post.id}
       end.to change(Post, :count).by(-1)
+
     end
 
     it 'redirects to the posts list' do
-      post = Post.create! valid_attributes
-      delete post_url(post)
-      expect(response).to redirect_to(posts_url)
+      post=Post.new(valid_attributes)
+      post.user_id = 1
+      post.save
+      delete :destroy, params: {id: post.id}
+      expect(response).to redirect_to(profile_path(1))
     end
   end
 end

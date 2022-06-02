@@ -2,7 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Chatrooms', type: :request do
+RSpec.describe ChatroomsController, type: :controller do
+  login_user
   describe 'GET /create' do
     it 'returns http success' do
       get '/chatrooms/create'
