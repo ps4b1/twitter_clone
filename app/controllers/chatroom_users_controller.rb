@@ -5,20 +5,15 @@ class ChatroomUsersController < ApplicationController
 
   def destroy
     current_chatroom = Chatroom.find(params[:chatroom])
-    @chatroom_user = ChatroomUser.find_by(chatroom_id: params[:chatroom], user_id: params[:user])
-    admin = @chatroom_user.admin
-    @chatroom_user.destroy
-    current_chatroom.destroy if current_chatroom.users.count == 0
-
-    if params[:user] == current_user.id.to_s
-      redirect_to chatrooms_path
-    end
-    if !admin && current_chatroom.users.count > 0
-      redirect_to edit_chatroom_path(current_chatroom)
-    end
-    if admin && current_chatroom.users.count > 0
+    chatroom_user = ChatroomUser.find_by(chatroom_id: params[:chatroom], user_id: params[:user])
+    admin = chatroom_user.admin
+    chatroom_user.destroy
+    redirect_to chatrooms_path if params[:user] == current_user.id.to_s
+    redirect_to edit_chatroom_path(current_chatroom) if !admin && current_chatroom.users.count.positive?
+    if admin && current_chatroom.users.count.positive?
       next_user = current_chatroom.chatroom_users.first
       next_user.update(admin: true)
     end
+    current_chatroom.destroy if current_chatroom.users.count.zero?
   end
 end

@@ -4,16 +4,16 @@ require 'rails_helper'
 
 RSpec.describe MessagesController, type: :controller do
   login_user
-  let!(:user2) {FactoryBot.create(:user)}
-  let!(:chatroom) {FactoryBot.create(:chatroom)}
-  let (:valid_attributes) do
+  let!(:user2) { FactoryBot.create(:user) }
+  let!(:chatroom) { FactoryBot.create(:chatroom) }
+  let(:valid_attributes) do
     {
       'content' => 'new message',
       'user_id' => user.id,
       'chatroom_id' => chatroom.id
     }
-    end
-  let (:invalid_attributes) do
+  end
+  let(:invalid_attributes) do
     {
       'content' => '',
       'user_id' => 'string',

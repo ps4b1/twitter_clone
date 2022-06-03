@@ -3,10 +3,9 @@
 class CommentsController < ApplicationController
   def create
     @comment = current_user.comments.new(comment_params)
+    redirect_to root_path
     if @comment.save
-      redirect_to root_path
     else
-      redirect_to root_path
       flash[:alert] = 'Something went wrong'
     end
   end

@@ -46,7 +46,6 @@ class ChatroomsController < ApplicationController
   end
 
   def edit
-
     if @chatroom.direct
       redirect_to chatroom_path(@chatroom)
       flash[:alert] = "Can't edit direct message"

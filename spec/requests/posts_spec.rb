@@ -36,7 +36,7 @@ RSpec.describe PostsController, type: :controller do
 
   describe 'GET /index' do
     it 'renders a successful response' do
-      post=Post.new(valid_attributes)
+      post = Post.new(valid_attributes)
       post.user = user
       post.save
       get :index
@@ -46,7 +46,7 @@ RSpec.describe PostsController, type: :controller do
 
   describe 'GET /show' do
     it 'renders a successful response' do
-      post=Post.new(valid_attributes)
+      post = Post.new(valid_attributes)
       post.user = user
       post.save
       get :show, params: { id: post.id }
@@ -56,7 +56,7 @@ RSpec.describe PostsController, type: :controller do
 
   describe 'GET /edit' do
     it 'renders a successful response' do
-      post=Post.new(valid_attributes)
+      post = Post.new(valid_attributes)
       post.user = user
       post.save
       puts post.id
@@ -72,10 +72,8 @@ RSpec.describe PostsController, type: :controller do
     end
   end
 
-
   describe 'POST /create' do
     context 'with valid parameters' do
-
       it 'does creates a Post' do
         expect do
           post :create, params: { post: valid_attributes }
@@ -95,7 +93,7 @@ RSpec.describe PostsController, type: :controller do
         end.to change(Post, :count).by(0)
       end
 
-      it "renders a successful response" do
+      it 'renders a successful response' do
         post :create, params: { post: invalid_attributes }
         expect(response).to render_template('posts/new')
       end
@@ -111,7 +109,7 @@ RSpec.describe PostsController, type: :controller do
       end
 
       it 'updates the requested post' do
-        post=Post.new(valid_attributes)
+        post = Post.new(valid_attributes)
         post.user = user
         post.save
         patch :update, params: { id: post.id, post: new_attributes }
@@ -121,7 +119,7 @@ RSpec.describe PostsController, type: :controller do
       end
 
       it 'redirects to the post' do
-        post=Post.new(valid_attributes)
+        post = Post.new(valid_attributes)
         post.user = user
         post.save
         patch :update, params: { id: post.id, post: new_attributes }
@@ -132,31 +130,30 @@ RSpec.describe PostsController, type: :controller do
 
     context 'with invalid parameters' do
       it "renders a successful response (i.e. to display the 'edit' template)" do
-        post=Post.new(valid_attributes)
+        post = Post.new(valid_attributes)
         post.user = user
         post.save
         patch :update, params: { id: post.id, post: invalid_attributes }
-        expect(response).to render_template("posts/edit")
+        expect(response).to render_template('posts/edit')
       end
     end
   end
 
   describe 'DELETE /destroy' do
     it 'destroys the requested post' do
-      post=Post.new(valid_attributes)
+      post = Post.new(valid_attributes)
       post.user = user
       post.save
       expect do
-        delete :destroy, params: {id: post.id}
+        delete :destroy, params: { id: post.id }
       end.to change(Post, :count).by(-1)
-
     end
 
     it 'redirects to the posts list' do
-      post=Post.new(valid_attributes)
+      post = Post.new(valid_attributes)
       post.user = user
       post.save
-      delete :destroy, params: {id: post.id}
+      delete :destroy, params: { id: post.id }
       expect(response).to redirect_to(profile_path(user))
     end
   end
