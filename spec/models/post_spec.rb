@@ -22,7 +22,7 @@ RSpec.describe Post, type: :model do
   end
   context 'repost' do
     before do
-      @test_post = FactoryBot.create(:post)
+      @test_post = FactoryBot.create(:post, user: @user)
       @post = Post.new(user_id: @user.id, id: 1, content: 'Repost', repostable: @test_post)
     end
     it 'should be valid with everything' do

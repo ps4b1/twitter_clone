@@ -7,8 +7,7 @@ class ChatroomUsersController < ApplicationController
     current_chatroom = Chatroom.find(params[:chatroom])
     chatroom_user = ChatroomUser.find_by(chatroom_id: params[:chatroom], user_id: params[:user])
     if chatroom_user.admin && current_chatroom.users.count.positive?
-      next_user = current_chatroom.chatroom_users.first
-      next_user.update(admin: true)
+      current_chatroom.chatroom_users.first.update(admin: true)
     end
     admin = chatroom_user.admin
     chatroom_user.destroy

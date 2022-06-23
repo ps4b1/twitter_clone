@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Like, type: :model do
   before do
     @user = FactoryBot.create(:user)
-    @post = FactoryBot.create(:post)
+    @post = FactoryBot.create(:post, user: @user)
     @like = Like.new(user: @user, likeable: @post)
   end
   it 'Should be valid' do

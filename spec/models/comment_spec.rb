@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Comment, type: :model do
   before do
     @user = FactoryBot.create(:user)
-    @post = FactoryBot.create(:post)
+    @post = FactoryBot.create(:post, user: @user)
     @comment = Comment.new(user: @user, commentable: @post, description: 'test comment')
   end
   it 'Should be valid' do
